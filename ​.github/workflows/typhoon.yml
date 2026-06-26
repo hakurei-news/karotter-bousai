@@ -1,0 +1,21 @@
+name: Typhoon Check
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+jobs:
+  check-typhoon:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: pip install requests
+    - name: Run Typhoon Script
+      env:
+        KAROTTER_TOKEN: ${{ secrets.KAROTTER_TOKEN }}
+      run: python typhoon.py
