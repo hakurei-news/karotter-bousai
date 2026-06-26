@@ -1,0 +1,20 @@
+name: Run Bousai Bot
+on:
+  schedule:
+    - cron: '*/1 * * * *'
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: pip install requests
+    - name: Run Python script
+      env:
+        KAROTTER_TOKEN: ${{ secrets.KAROTTER_TOKEN }}
+      run: python bot.py
